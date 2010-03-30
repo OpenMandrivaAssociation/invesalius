@@ -16,7 +16,7 @@ Group:			Sciences/Other
 License:		GPL
 Summary:		Medical Imaging Public Software
 Version:		%{version}
-Release:		%mkrel 1
+Release:		%mkrel 2
 URL:			http://svn.softwarepublico.gov.br/trac/invesalius/
 Source0:		%{name}%{version}.tar.bz2
 Source1:		%{name}.xpm
@@ -45,6 +45,7 @@ visualization tools.
 %build
 perl -pi -e 's|/usr/local/bin/python|%{__python}|;' invesalius/invesalius.py
 perl -pi -e 's|^import itk||;' invesalius/reader/analyze_reader.py
+perl -pi -e 's|(DOC_DIR = ).*|$1"%{_docdir}/%{name}"|;' invesalius/constants.py
 
 #-----------------------------------------------------------------------
 %clean
