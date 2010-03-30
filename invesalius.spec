@@ -24,7 +24,7 @@ BuildRoot:		%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 Requires:		pygtk2.0
 Requires:		python-cairo
-Requires:		python-itk
+#Requires:		python-itk
 Requires:		python-sigar
 Requires:		python-vtk
 Requires:		python-gdcm
