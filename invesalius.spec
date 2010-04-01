@@ -16,7 +16,7 @@ Group:			Sciences/Other
 License:		GPL
 Summary:		Medical Imaging Public Software
 Version:		%{version}
-Release:		%mkrel 2
+Release:		%mkrel 3
 URL:			http://svn.softwarepublico.gov.br/trac/invesalius/
 Source0:		%{name}%{version}.tar.bz2
 Source1:		%{name}.xpm
@@ -28,7 +28,10 @@ Requires:		python-cairo
 Requires:		python-sigar
 Requires:		python-vtk
 Requires:		python-gdcm
+Requires:		python-imaging
 Requires:		wxPythonGTK
+
+Patch0:			invesalius-locale.patch
 
 #-----------------------------------------------------------------------
 %description
@@ -40,6 +43,8 @@ visualization tools.
 #-----------------------------------------------------------------------
 %prep
 %setup -q -n %{name}%{version}
+
+%patch0 -p1
 
 #-----------------------------------------------------------------------
 %build
