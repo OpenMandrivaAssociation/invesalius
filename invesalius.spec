@@ -1,4 +1,4 @@
-%define	svnrev		1833
+%define	svnrev		1872
 %define name		invesalius
 %define version		3
 %define instdir		%{_datadir}/%{name}
@@ -13,10 +13,10 @@
 
 Name:			%{name}
 Group:			Sciences/Other
-License:		GPL
-Summary:		Medical Imaging Public Software
+License:		GPLv2
+Summary:		3D medical imaging reconstruction software
 Version:		%{version}
-Release:		%mkrel 3
+Release:		%mkrel 4
 URL:			http://svn.softwarepublico.gov.br/trac/invesalius/
 Source0:		%{name}%{version}.tar.bz2
 Source1:		%{name}.xpm
@@ -31,20 +31,30 @@ Requires:		python-gdcm
 Requires:		python-imaging
 Requires:		wxPythonGTK
 
-Patch0:			invesalius-locale.patch
-
 #-----------------------------------------------------------------------
 %description
-InVesalius is a free software (GNU GPL 2) build in collaboration with the
-community. It generates 3D medical imaging reconstruction based on a sequence
-of 2D DICOM files acquired with CT or MRI equipments, providing several
-visualization tools.
+  InVesalius generates 3D anatomical models based on a sequence of 2D DICOM
+files acquired using CT or MRI equipments.  InVesalius is internationalized
+(currently available in Chinese, English, French,  German, Greek, Portuguese,
+Spanish) and provides several tools:
+  * DICOM-support including: (a) ACR-NEMA version 1 and 2; (b) DICOM
+    version 3.0 (including various encodings of JPEG -lossless and lossy-, RLE)
+  * Image manipulation facilities (zoom, pan, rotation, brightness/contrast, etc)
+  * Segmentation based on 2D slices
+  * Pre-defined threshold ranges according to tissue of interest
+  * Edition tools (similar to Paint Brush) based on 2D slices
+  * 2D and 3D measurements (distance and angle)
+  * 3D surface creation
+  * 3D surface connectivity tools
+  * 3D surface exportation (including: binary STL, OBJ, VRML, Inventor)
+  * High-quality volume rendering
+  * Pre-defined volume rendering presets
+  * Volume rendering crop plane
+  * Picture exportation (including: BMP, TIFF, JPG, PostScript, POV-Ray)
 
 #-----------------------------------------------------------------------
 %prep
 %setup -q -n %{name}%{version}
-
-%patch0 -p1
 
 #-----------------------------------------------------------------------
 %build
