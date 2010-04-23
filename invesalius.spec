@@ -1,6 +1,6 @@
-%define	svnrev		1872
+%define	svnrev		1886
 %define name		invesalius
-%define version		3
+%define vers		3
 %define instdir		%{_datadir}/%{name}
 
 # checkout procedure:
@@ -15,16 +15,18 @@ Name:			%{name}
 Group:			Sciences/Other
 License:		GPLv2
 Summary:		3D medical imaging reconstruction software
-Version:		%{version}
-Release:		%mkrel 4
+Version:		%{vers}.0.%{svnrev}
+Release:		%mkrel 1
 URL:			http://svn.softwarepublico.gov.br/trac/invesalius/
-Source0:		%{name}%{version}.tar.bz2
+Source0:		%{name}%{vers}.tar.bz2
 Source1:		%{name}.xpm
-BuildRoot:		%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+BuildRoot:		%{_tmppath}/%{name}-%{vers}-%{release}-buildroot
 
 Requires:		pygtk2.0
 Requires:		python-cairo
-#Requires:		python-itk
+Requires:		python-itk
+Requires:		python-itkvtk
+Requires:		python-itk-numarray
 Requires:		python-sigar
 Requires:		python-vtk
 Requires:		python-gdcm
@@ -54,12 +56,11 @@ Spanish) and provides several tools:
 
 #-----------------------------------------------------------------------
 %prep
-%setup -q -n %{name}%{version}
+%setup -q -n %{name}%{vers}
 
 #-----------------------------------------------------------------------
 %build
 perl -pi -e 's|/usr/local/bin/python|%{__python}|;' invesalius/invesalius.py
-perl -pi -e 's|^import itk||;' invesalius/reader/analyze_reader.py
 perl -pi -e 's|(DOC_DIR = ).*|$1"%{_docdir}/%{name}"|;' invesalius/constants.py
 
 #-----------------------------------------------------------------------
