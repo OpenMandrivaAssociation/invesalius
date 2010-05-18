@@ -16,7 +16,7 @@ Group:			Sciences/Other
 License:		GPLv2
 Summary:		3D medical imaging reconstruction software
 Version:		%{vers}.0.%{svnrev}
-Release:		%mkrel 1
+Release:		%mkrel 2
 URL:			http://svn.softwarepublico.gov.br/trac/invesalius/
 Source0:		%{name}%{vers}.tar.bz2
 Source1:		%{name}.xpm
@@ -32,6 +32,8 @@ Requires:		python-vtk
 Requires:		python-gdcm
 Requires:		python-imaging
 Requires:		wxPythonGTK
+
+Patch1:			invesalius-tempfile.patch
 
 #-----------------------------------------------------------------------
 %description
@@ -57,6 +59,8 @@ Spanish) and provides several tools:
 #-----------------------------------------------------------------------
 %prep
 %setup -q -n %{name}%{vers}
+
+%patch1 -p1
 
 #-----------------------------------------------------------------------
 %build
