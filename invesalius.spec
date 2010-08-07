@@ -1,4 +1,4 @@
-%define	svnrev		1886
+%define	svnrev		1910
 %define name		invesalius
 %define vers		3
 %define instdir		%{_datadir}/%{name}
@@ -6,17 +6,17 @@
 # checkout procedure:
 # http://svn.softwarepublico.gov.br/trac/invesalius/wiki/InVesalius/DownloadSource
 # source build as:
-# 	% svn co svn checkout --username anonymous.invesalius@gmail.com http://svn.softwarepublico.gov.br/svn/invesalius/invesalius3/trunk invesalius3
+# 	% svn checkout --username anonymous.invesalius@gmail.com http://svn.softwarepublico.gov.br/svn/invesalius/invesalius3/trunk invesalius3
 # <<use 'invesalius' password>>
 #	% rm -fr `find invesalius3 -type d -name .svn`
-# 	% tar jcvf invesalius.tar.bz2 invesalius3
+# 	% tar jcvf invesalius3.tar.bz2 invesalius3
 
 Name:			%{name}
 Group:			Sciences/Other
 License:		GPLv2
 Summary:		3D medical imaging reconstruction software
 Version:		%{vers}.0.%{svnrev}
-Release:		%mkrel 2
+Release:		%mkrel 1
 URL:			http://svn.softwarepublico.gov.br/trac/invesalius/
 Source0:		%{name}%{vers}.tar.bz2
 Source1:		%{name}.xpm
@@ -32,8 +32,6 @@ Requires:		python-vtk
 Requires:		python-gdcm
 Requires:		python-imaging
 Requires:		wxPythonGTK
-
-Patch1:			invesalius-tempfile.patch
 
 #-----------------------------------------------------------------------
 %description
@@ -59,8 +57,6 @@ Spanish) and provides several tools:
 #-----------------------------------------------------------------------
 %prep
 %setup -q -n %{name}%{vers}
-
-%patch1 -p1
 
 #-----------------------------------------------------------------------
 %build
