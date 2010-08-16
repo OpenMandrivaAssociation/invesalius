@@ -1,4 +1,4 @@
-%define	svnrev		1910
+%define	svnrev		1912
 %define name		invesalius
 %define vers		3
 %define instdir		%{_datadir}/%{name}
@@ -24,13 +24,16 @@ BuildRoot:		%{_tmppath}/%{name}-%{vers}-%{release}-buildroot
 
 Requires:		pygtk2.0
 Requires:		python-cairo
+Requires:		python-dicom
 Requires:		python-itk
 Requires:		python-itkvtk
 Requires:		python-itk-numarray
+Requires:		python-nibabel
 Requires:		python-sigar
 Requires:		python-vtk
 Requires:		python-gdcm
 Requires:		python-imaging
+Requires:		python-serial
 Requires:		wxPythonGTK
 
 #-----------------------------------------------------------------------
