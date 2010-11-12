@@ -1,4 +1,4 @@
-%define	svnrev		1912
+%define	svnrev		1925
 %define name		invesalius
 %define vers		3
 %define instdir		%{_datadir}/%{name}
