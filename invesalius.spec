@@ -16,7 +16,7 @@ Group:			Sciences/Other
 License:		GPLv2
 Summary:		3D medical imaging reconstruction software
 Version:		%{vers}.0.%{svnrev}
-Release:		%mkrel 1
+Release:		%mkrel 2
 URL:			http://svn.softwarepublico.gov.br/trac/invesalius/
 Source0:		%{name}%{vers}.tar.bz2
 Source1:		%{name}.xpm
@@ -65,6 +65,7 @@ Spanish) and provides several tools:
 %build
 perl -pi -e 's|/usr/local/bin/python|%{__python}|;' invesalius/invesalius.py
 perl -pi -e 's|(DOC_DIR = ).*|$1"%{_docdir}/%{name}"|;' invesalius/constants.py
+perl -pi -e 's|\bSpacing= |spacing=|;' invesalius/gui/default_tasks.py
 
 #-----------------------------------------------------------------------
 %clean
