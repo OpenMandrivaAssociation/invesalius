@@ -16,7 +16,7 @@ Group:			Sciences/Other
 License:		GPLv2
 Summary:		3D medical imaging reconstruction software
 Version:		%{vers}.0.%{svnrev}
-Release:		%mkrel 2
+Release:		%mkrel 3
 URL:			http://svn.softwarepublico.gov.br/trac/invesalius/
 Source0:		%{name}%{vers}.tar.bz2
 Source1:		%{name}.xpm
@@ -26,7 +26,6 @@ Requires:		pygtk2.0
 Requires:		python-cairo
 Requires:		python-dicom
 Requires:		python-itk
-Requires:		python-itkvtk
 Requires:		python-itk-numarray
 Requires:		python-nibabel
 Requires:		python-sigar
