@@ -115,3 +115,49 @@ EOF
 %doc %{_docdir}/%{name}/*
 %{_datadir}/applications/*
 %{_datadir}/pixmaps/%{name}.xpm
+
+
+%changelog
+* Thu Nov 17 2011 Paulo Andrade <pcpa@mandriva.com.br> 3.0.1925-3mdv2012.0
++ Revision: 731313
+- Remove dependency on wrapitk.
+
+* Tue May 17 2011 Paulo Andrade <pcpa@mandriva.com.br> 3.0.1925-2
++ Revision: 675930
+- Add workaround for argument name change in wxPythonGTK-2.8.12.
+
+* Fri Nov 12 2010 Paulo Andrade <pcpa@mandriva.com.br> 3.0.1925-1mdv2011.0
++ Revision: 596961
+- Update to new stable svn snapshot revision 1925
+
+* Mon Aug 16 2010 Paulo Andrade <pcpa@mandriva.com.br> 3.0.1912-1mdv2011.0
++ Revision: 570660
+- Update requires and svn snapshot.
+- Update to a newer svn snapshot.
+
+* Tue May 18 2010 Paulo Andrade <pcpa@mandriva.com.br> 3.0.1886-2mdv2010.1
++ Revision: 545264
+- Avoid /tmp possible exploit or race condition
+
+* Fri Apr 23 2010 Paulo Andrade <pcpa@mandriva.com.br> 3.0.1886-1mdv2010.1
++ Revision: 538371
+- Update to a newer svn snapshot
+- Enable itk and wrapitk were updated in cooker
+
+* Mon Apr 05 2010 Paulo Andrade <pcpa@mandriva.com.br> 3-4mdv2010.1
++ Revision: 531858
+- o Update license, summary and description as requested by upstream
+
+* Thu Apr 01 2010 Paulo Andrade <pcpa@mandriva.com.br> 3-3mdv2010.1
++ Revision: 530740
++ rebuild (emptylog)
+
+* Wed Mar 31 2010 Paulo Andrade <pcpa@mandriva.com.br> 3-2mdv2010.1
++ Revision: 530088
+- Correct documentation search path
+
+* Tue Mar 30 2010 Paulo Andrade <pcpa@mandriva.com.br> 3-1mdv2010.1
++ Revision: 529998
+- Import invesalius 3.
+- invesalius
+
