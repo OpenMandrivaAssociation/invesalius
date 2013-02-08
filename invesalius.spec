@@ -16,7 +16,7 @@ Group:			Sciences/Other
 License:		GPLv2
 Summary:		3D medical imaging reconstruction software
 Version:		%{vers}.0.%{svnrev}
-Release:		%mkrel 3
+Release:		4
 URL:			http://svn.softwarepublico.gov.br/trac/invesalius/
 Source0:		%{name}%{vers}.tar.bz2
 Source1:		%{name}.xpm
@@ -43,7 +43,7 @@ files acquired using CT or MRI equipments.  InVesalius is internationalized
 Spanish) and provides several tools:
   * DICOM-support including: (a) ACR-NEMA version 1 and 2; (b) DICOM
     version 3.0 (including various encodings of JPEG -lossless and lossy-, RLE)
-  * Image manipulation facilities (zoom, pan, rotation, brightness/contrast, etc)
+  * Image manipulation facilities (zoom, pan, rotation, brightness/contrast, ..)
   * Segmentation based on 2D slices
   * Pre-defined threshold ranges according to tissue of interest
   * Edition tools (similar to Paint Brush) based on 2D slices
