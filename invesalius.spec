@@ -3,6 +3,8 @@
 %define vers		3
 %define instdir		%{_datadir}/%{name}
 
+%define debug_package %{nil}
+
 # checkout procedure:
 # http://svn.softwarepublico.gov.br/trac/invesalius/wiki/InVesalius/DownloadSource
 # source build as:
@@ -20,7 +22,6 @@ Release:		4
 URL:			http://svn.softwarepublico.gov.br/trac/invesalius/
 Source0:		%{name}%{vers}.tar.bz2
 Source1:		%{name}.xpm
-BuildRoot:		%{_tmppath}/%{name}-%{vers}-%{release}-buildroot
 
 Requires:		pygtk2.0
 Requires:		python-cairo
