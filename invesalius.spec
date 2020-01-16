@@ -21,6 +21,7 @@ Requires:              python-dicom
 Requires:              python-pillow
 Requires:              python-serial
 Requires:              wxPythonGTK
+BuildRequires:         wxPythonGTK
 BuildRequires:         python-cython
 BuildRequires:         python-numpy
 BuildArch:             noarch
