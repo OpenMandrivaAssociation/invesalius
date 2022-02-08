@@ -89,7 +89,6 @@ for dir in ai icons invesalius locale presets samples; do
 done
 
 # fix plugins path
-mv %{buildroot}%{py_platsitedir}/%{name}_cy %{buildroot}%{_datadir}/%{name}/
 cp -fa %{name}_cy/*py %{buildroot}%{_datadir}/%{name}/%{name}_cy
 rm -fr %{buildroot}%{_libdir}/
 
@@ -104,7 +103,6 @@ cat > %{buildroot}%{_bindir}/%{name} << EOF
 #export GDK_BACKEND=x11
 export INVESALIUS_LIBRARY_PATH="%{_datadir}/%{name}"
 cd \$INVESALIUS_LIBRARY_PATH
-%{__python} invesalius.py "\$@"
 %{__python} app.py "\$@"
 EOF
 chmod +x %{buildroot}%{_bindir}/%{name}
