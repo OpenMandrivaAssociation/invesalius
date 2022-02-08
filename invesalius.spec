@@ -1,30 +1,37 @@
+%bcond_with _build_doc
+
 Name:			invesalius
 Group:			Sciences/Other
 License:		GPLv2
 Summary:		3D medical imaging reconstruction software
-Version:		3.1.99994
-Release:		2
+Version:		3.1.99997
+Release:		1
 URL:			http://svn.softwarepublico.gov.br/trac/invesalius/
-Source0:		https://github.com/invesalius/invesalius3/archive/v%{version}.tar.gz
+Source0:		https://github.com/invesalius/invesalius3/archive/v%{version}/%{name}-%{version}.tar.gz
 Source1:		%{name}.xpm
 
-Requires:              pygtk2.0
-Requires:              python-cairo
-Requires:              python-dicom
-#Requires:              python-itk
-#Requires:              python-itk-numarray
-#Requires:              python-nibabel
-#Requires:              python-sigar
-#Requires:              python-vtk
-#Requires:              python-gdcm
-#Requires:              python-imaging
-Requires:              python-pillow
-Requires:              python-serial
-Requires:              wxPythonGTK
-BuildRequires:         wxPythonGTK
 BuildRequires:         python-cython
 BuildRequires:         python-numpy
-BuildArch:             noarch
+%if %{with _build_doc}
+BuildRequires:         texlive
+%endif
+
+Requires:	python-cython
+Requires:	python-gdcm
+Requires:	python-h5py
+Requires:	python-keras
+Requires:	python-imageio
+Requires:	python-imaging
+Requires:	python-nibabel
+Requires:	python-numpy
+Requires:	python-psutil
+Requires:	python-pypubsub
+Requires:	python-scipy
+Requires:	python-serial
+Requires:	python-skimage
+Requires:	python-theano
+Requires:	python-vtk
+Requires:	wxPythonGTK
 
 %description
 InVesalius generates 3D anatomical models based on a sequence of 2D DICOM
@@ -46,39 +53,63 @@ Spanish) and provides several tools:
   * Volume rendering crop plane
   * Picture exportation (including: BMP, TIFF, JPG, PostScript, POV-Ray)
 
+%files
+%license LICENSE.txt LICENSE.pt.txt
+%doc AUTHORS.md changelog.md HEADER.txt README.md docs/user_guide_en.pdf docs/user_guide_pt_BR.pdf
+%{_bindir}/%{name}
+%{_datadir}/%{name}
+%{_datadir}/applications/*
+%{_datadir}/pixmaps/%{name}.xpm
+
+#-----------------------------------------------------------------------
+
 %prep
 %autosetup -n %{name}3-%{version}
-sed -i '127i\
-        pass' invesalius/data/styles.py
 
 %build
-#perl -pi -e 's|/usr/local/bin/python|%{__python}|;' invesalius/invesalius.py
-perl -pi -e 's|(DOC_DIR = ).*|$1"%{_docdir}/%{name}"|;' invesalius/constants.py
-perl -pi -e 's|\bSpacing= |spacing=|;' invesalius/gui/default_tasks.py
 %py_build
 
+# build docs
+%if %{with _build_doc}
+for arg in docs/{user_guide_en_source,user_guide_pt_BR_source}; do
+    pushd ${arg}
+		make
+	popd
+done
+%endif
+
 %install
+# install doesn't work
+#py_install
+
+# data
 mkdir -p %{buildroot}%{_datadir}/%{name}
-for dir in icons invesalius locale presets samples; do
+for dir in ai icons invesalius locale presets samples; do
     cp -far $dir %{buildroot}%{_datadir}/%{name}
 done
 
-mkdir -p %{buildroot}%{_docdir}/%{name}
-for arg in *.txt docs/*; do
-    cp -far $arg %{buildroot}%{_docdir}/%{name}
-done
+# fix plugins path
+mv %{buildroot}%{py_platsitedir}/%{name}_cy %{buildroot}%{_datadir}/%{name}/
+cp -fa %{name}_cy/*py %{buildroot}%{_datadir}/%{name}/%{name}_cy
+rm -fr %{buildroot}%{_libdir}/
 
+# add app
+cp -fa app.py %{buildroot}%{_datadir}/%{name}/
+
+# launcher
 mkdir -p %{buildroot}%{_bindir}
 cat > %{buildroot}%{_bindir}/%{name} << EOF
 #!/bin/sh
-export INVESALIUS_LIBRARY_PATH="%{_datadir}/%{name}/%{name}"
+#export INV_SAMPLE_DIR="%{_datadir}/%{name}/samples/"
+#export GDK_BACKEND=x11
+export INVESALIUS_LIBRARY_PATH="%{_datadir}/%{name}"
 cd \$INVESALIUS_LIBRARY_PATH
-python2 invesalius.py "\$@"
+%{__python} invesalius.py "\$@"
+%{__python} app.py "\$@"
 EOF
 chmod +x %{buildroot}%{_bindir}/%{name}
 
-install -m644 -D %{SOURCE1} %{buildroot}%{_datadir}/pixmaps/%{name}.xpm
-
+# .desktop
 mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << EOF
 [Desktop Entry]
@@ -91,11 +122,6 @@ Type=Application
 Categories=Application;Graphics;Medical;
 EOF
 
-sed -i 's|/usr/bin/env python$|/usr/bin/python2|' %{buildroot}%{_datadir}/invesalius/invesalius/*/*.py %{buildroot}%{_datadir}/invesalius/invesalius/*/*/*.py
+# icon
+install -m644 -D %{SOURCE1} %{buildroot}%{_datadir}/pixmaps/%{name}.xpm
 
-%files
-%{_bindir}/%{name}
-%{_datadir}/%{name}
-%{_docdir}/%{name}
-%{_datadir}/applications/*
-%{_datadir}/pixmaps/%{name}.xpm
