@@ -1,3 +1,7 @@
+# FIXME debugsource should not be empty
+%define	debug_package	%{nil}
+
+# FIXME actually OM texlive and doxygen are broken!
 %bcond_with _build_doc
 
 Name:			invesalius
@@ -10,28 +14,30 @@ URL:			http://svn.softwarepublico.gov.br/trac/invesalius/
 Source0:		https://github.com/invesalius/invesalius3/archive/v%{version}/%{name}-%{version}.tar.gz
 Source1:		%{name}.xpm
 
-BuildRequires:         python-cython
-BuildRequires:         python-numpy
+BuildRequires:	imagemagick
+BuildRequires:	pkgconfig(python3)
+BuildRequires:	python3dist(cython)
+BuildRequires:	python3dist(numpy)
 %if %{with _build_doc}
-BuildRequires:         texlive
+BuildRequires:	texlive
 %endif
 
-Requires:	python-cython
+Requires:	python3dist(cython)
 Requires:	python-gdcm
-Requires:	python-h5py
-Requires:	python-keras
-Requires:	python-imageio
-Requires:	python-imaging
-Requires:	python-nibabel
-Requires:	python-numpy
-Requires:	python-psutil
-Requires:	python-pypubsub
-Requires:	python-scipy
-Requires:	python-serial
-Requires:	python-skimage
-Requires:	python-theano
+Requires:	python3dist(h5py)
+Requires:	python3dist(keras)
+Requires:	python3dist(imageio)
+Requires:	python3dist(nibabel)
+Requires:	python3dist(numpy)
+Requires:	python3dist(pillow)
+Requires:	python3dist(psutil)
+Requires:	python3dist(pypubsub)
+Requires:	python3dist(scipy)
+Requires:	python3dist(pyserial)
+Requires:	python3dist(scikit-image)
+Requires:	python3dist(theano)
+Requires:	python3dist(wxpython)
 Requires:	python-vtk
-Requires:	wxPythonGTK
 
 %description
 InVesalius generates 3D anatomical models based on a sequence of 2D DICOM
@@ -58,8 +64,9 @@ Spanish) and provides several tools:
 %doc AUTHORS.md changelog.md HEADER.txt README.md docs/user_guide_en.pdf docs/user_guide_pt_BR.pdf
 %{_bindir}/%{name}
 %{_datadir}/%{name}
-%{_datadir}/applications/*
+%{_datadir}/applications/openmandriva-%{name}.desktop
 %{_datadir}/pixmaps/%{name}.xpm
+%{_iconsdir}/hicolor/*/apps/%{name}.png
 
 #-----------------------------------------------------------------------
 
@@ -72,7 +79,7 @@ Spanish) and provides several tools:
 # build docs
 %if %{with _build_doc}
 for arg in docs/{user_guide_en_source,user_guide_pt_BR_source}; do
-    pushd ${arg}
+	pushd ${arg}
 		make
 	popd
 done
@@ -84,8 +91,9 @@ done
 
 # data
 mkdir -p %{buildroot}%{_datadir}/%{name}
-for dir in ai icons invesalius locale presets samples; do
-    cp -far $dir %{buildroot}%{_datadir}/%{name}
+for dir in ai icons invesalius locale presets samples
+do
+	cp -far $dir %{buildroot}%{_datadir}/%{name}
 done
 
 # fix plugins path
@@ -108,18 +116,25 @@ EOF
 chmod +x %{buildroot}%{_bindir}/%{name}
 
 # .desktop
-mkdir -p %{buildroot}%{_datadir}/applications
-cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << EOF
+install -dm 0755 %{buildroot}%{_datadir}/applications/
+cat > %{buildroot}%{_datadir}/applications/openmandriva-%{name}.desktop << EOF
 [Desktop Entry]
 Name=InVesalius
 Comment=Medical Imaging Public Software
-Exec=invesalius
-Icon=invesalius
+Exec=%{name}
+Icon=%{name}
 Terminal=false
 Type=Application
 Categories=Application;Graphics;Medical;
+X-Vendor=OpenMandriva
 EOF
 
 # icon
+for d in 16 32 48 64 72 128 256
+do
+	install -dm 0755 %{buildroot}%{_iconsdir}/hicolor/${d}x${d}/apps/
+	convert -background none -size "${d}x${d}" "%{SOURCE1}" \
+			%{buildroot}%{_iconsdir}/hicolor/${d}x${d}/apps/%{name}.png
+done
 install -m644 -D %{SOURCE1} %{buildroot}%{_datadir}/pixmaps/%{name}.xpm
 
