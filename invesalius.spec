@@ -1,18 +1,18 @@
 # FIXME debugsource should not be empty
-%define	debug_package	%{nil}
+#define	debug_package	%{nil}
 
 # FIXME actually OM texlive and doxygen are broken!
 %bcond_with _build_doc
 
-Name:			invesalius
-Group:			Sciences/Other
-License:		GPLv2
-Summary:		3D medical imaging reconstruction software
-Version:		3.1.99997
-Release:		1
-URL:			http://svn.softwarepublico.gov.br/trac/invesalius/
-Source0:		https://github.com/invesalius/invesalius3/archive/v%{version}/%{name}-%{version}.tar.gz
-Source1:		%{name}.xpm
+Name:		invesalius
+Group:		Sciences/Other
+License:	GPLv2
+Summary:	3D medical imaging reconstruction software
+Version:	3.1.99997
+Release:	1
+URL:		http://svn.softwarepublico.gov.br/trac/invesalius/
+Source0:	https://github.com/invesalius/invesalius3/archive/v%{version}/%{name}-%{version}.tar.gz
+Source1:	%{name}.xpm
 
 BuildRequires:	imagemagick
 BuildRequires:	pkgconfig(python3)
@@ -31,6 +31,7 @@ Requires:	python3dist(nibabel)
 Requires:	python3dist(numpy)
 Requires:	python3dist(pillow)
 Requires:	python3dist(psutil)
+Requires:	python3dist(pyacvd)
 Requires:	python3dist(pypubsub)
 Requires:	python3dist(scipy)
 Requires:	python3dist(pyserial)
@@ -60,9 +61,10 @@ Spanish) and provides several tools:
   * Picture exportation (including: BMP, TIFF, JPG, PostScript, POV-Ray)
 
 %files
-%license LICENSE.txt LICENSE.pt.txt
+%license LICENSE.txt
 %doc AUTHORS.md changelog.md HEADER.txt README.md docs/user_guide_en.pdf docs/user_guide_pt_BR.pdf
 %{_bindir}/%{name}
+%{_libdir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/applications/openmandriva-%{name}.desktop
 %{_datadir}/pixmaps/%{name}.xpm
@@ -74,7 +76,7 @@ Spanish) and provides several tools:
 %autosetup -n %{name}3-%{version}
 
 %build
-%py_build
+%py_build -- build build_ext --inplace
 
 # build docs
 %if %{with _build_doc}
@@ -97,11 +99,12 @@ do
 done
 
 # fix plugins path
-cp -fa %{name}_cy/*py %{buildroot}%{_datadir}/%{name}/%{name}_cy
-rm -fr %{buildroot}%{_libdir}/
+mkdir -p %{buildroot}%{_libdir}/%{name}/%{name}_cy
+cp -far %{name}_cy/*{py,so} %{buildroot}%{_libdir}/%{name}/%{name}_cy
+
 
 # add app
-cp -fa app.py %{buildroot}%{_datadir}/%{name}/
+cp -far app.py %{buildroot}%{_datadir}/%{name}/
 
 # launcher
 mkdir -p %{buildroot}%{_bindir}
@@ -109,6 +112,7 @@ cat > %{buildroot}%{_bindir}/%{name} << EOF
 #!/bin/sh
 #export INV_SAMPLE_DIR="%{_datadir}/%{name}/samples/"
 #export GDK_BACKEND=x11
+export PYTHONPATH=\$PYTHONPATH:"%{_libdir}/%{name}/%{name}_cy"
 export INVESALIUS_LIBRARY_PATH="%{_datadir}/%{name}"
 cd \$INVESALIUS_LIBRARY_PATH
 %{__python} app.py "\$@"
