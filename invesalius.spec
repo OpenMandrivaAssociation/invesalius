@@ -76,7 +76,7 @@ Spanish) and provides several tools:
 %autosetup -n %{name}3-%{version}
 
 %build
-%py_build -- build build_ext --inplace
+%{__python} build build_ext --inplace
 
 # build docs
 %if %{with _build_doc}
@@ -89,7 +89,7 @@ done
 
 %install
 # install doesn't work
-#py_install
+#%%py_install
 
 # data
 mkdir -p %{buildroot}%{_datadir}/%{name}
@@ -112,7 +112,7 @@ cat > %{buildroot}%{_bindir}/%{name} << EOF
 #!/bin/sh
 #export INV_SAMPLE_DIR="%{_datadir}/%{name}/samples/"
 #export GDK_BACKEND=x11
-export PYTHONPATH=\$PYTHONPATH:"%{_libdir}/%{name}/%{name}_cy"
+export PYTHONPATH=\$PYTHONPATH:"%{_libdir}/%{name}"
 export INVESALIUS_LIBRARY_PATH="%{_datadir}/%{name}"
 cd \$INVESALIUS_LIBRARY_PATH
 %{__python} app.py "\$@"
