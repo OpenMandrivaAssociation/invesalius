@@ -13,6 +13,7 @@ Release:	3
 URL:		http://svn.softwarepublico.gov.br/trac/invesalius/
 Source0:	https://github.com/invesalius/invesalius3/archive/v%{version}/%{name}-%{version}.tar.gz
 Source1:	%{name}.xpm
+Patch0:		invesalius3-3.1.99998-python3.11.patch
 
 BuildRequires:	imagemagick
 BuildRequires:	pkgconfig(python3)

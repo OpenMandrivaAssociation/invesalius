@@ -1,0 +1,11 @@
+--- a/invesalius/i18n.py
++++ b/invesalius/i18n.py
+@@ -79,7 +79,7 @@
+         language_dir = os.path.join(abs_file_path, 'locale')
+ 
+     lang = gettext.translation('invesalius', language_dir,
+-                               languages=[language], codeset='utf8')
++                               languages=[language])
+ 
+     # Using unicode
+     try:
