@@ -73,7 +73,7 @@ Spanish) and provides several tools:
 #-----------------------------------------------------------------------
 
 %prep
-%autosetup -n %{name}3-%{version}
+%autosetup -p1 -n %{name}3-%{version}
 
 %build
 %{__python} build build_ext --inplace
