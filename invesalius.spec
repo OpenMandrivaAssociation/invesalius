@@ -76,7 +76,7 @@ Spanish) and provides several tools:
 %autosetup -p1 -n %{name}3-%{version}
 
 %build
-%{__python} build build_ext --inplace
+%{__python} setup.py build build_ext --inplace
 
 # build docs
 %if %{with _build_doc}
