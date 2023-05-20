@@ -9,7 +9,7 @@ Group:		Sciences/Other
 License:	GPLv2
 Summary:	3D medical imaging reconstruction software
 Version:	3.1.99998
-Release:	4
+Release:	5
 URL:		https://invesalius.github.io
 Source0:	https://github.com/invesalius/invesalius3/archive/v%{version}/%{name}-%{version}.tar.gz
 Source1:	%{name}.xpm
