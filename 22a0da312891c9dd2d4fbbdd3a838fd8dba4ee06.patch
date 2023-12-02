@@ -1,0 +1,27 @@
+From 22a0da312891c9dd2d4fbbdd3a838fd8dba4ee06 Mon Sep 17 00:00:00 2001
+From: Thiago Franco de Moraes <totonixsame@gmail.com>
+Date: Wed, 8 Feb 2023 22:15:45 -0300
+Subject: [PATCH] GDCM 3.0.21 doesn't have Trace_DebugOff and Trace_WarningOff
+
+---
+ invesalius/reader/dicom_reader.py | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/invesalius/reader/dicom_reader.py b/invesalius/reader/dicom_reader.py
+index b2d6514b0..6b836af4e 100644
+--- a/invesalius/reader/dicom_reader.py
++++ b/invesalius/reader/dicom_reader.py
+@@ -25,8 +25,11 @@
+ import gdcm
+ 
+ # Not showing GDCM warning and debug messages
+-gdcm.Trace_DebugOff()
+-gdcm.Trace_WarningOff()
++try:
++    gdcm.Trace_DebugOff()
++    gdcm.Trace_WarningOff()
++except AttributeError:
++    pass
+ 
+ import glob
+ import plistlib

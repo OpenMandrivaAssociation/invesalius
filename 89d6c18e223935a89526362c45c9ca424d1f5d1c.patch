@@ -1,0 +1,43 @@
+From 89d6c18e223935a89526362c45c9ca424d1f5d1c Mon Sep 17 00:00:00 2001
+From: Thiago Franco de Moraes <totonixsame@gmail.com>
+Date: Tue, 10 May 2022 16:02:27 -0300
+Subject: [PATCH] Converted dicom_reader.py to vtkmodules
+
+---
+ invesalius/reader/dicom_reader.py | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/invesalius/reader/dicom_reader.py b/invesalius/reader/dicom_reader.py
+index b7580b537..b2d6514b0 100644
+--- a/invesalius/reader/dicom_reader.py
++++ b/invesalius/reader/dicom_reader.py
+@@ -23,14 +23,16 @@
+ from multiprocessing import cpu_count
+ 
+ import gdcm
+-import vtk
+ 
+ # Not showing GDCM warning and debug messages
+ gdcm.Trace_DebugOff()
+ gdcm.Trace_WarningOff()
++
+ import glob
+ import plistlib
+ 
++from vtkmodules.vtkCommonCore import vtkFileOutputWindow, vtkOutputWindow
++
+ import invesalius.constants as const
+ import invesalius.reader.dicom as dicom
+ import invesalius.reader.dicom_grouper as dicom_grouper
+@@ -351,9 +353,9 @@ def GetDicomGroups(self, path, recursive):
+             log_path = utils.encode(
+                 str(inv_paths.USER_LOG_DIR.joinpath("vtkoutput.txt")), const.FS_ENCODE
+             )
+-            fow = vtk.vtkFileOutputWindow()
++            fow = vtkFileOutputWindow()
+             fow.SetFileName(log_path)
+-            ow = vtk.vtkOutputWindow()
++            ow = vtkOutputWindow()
+             ow.SetInstance(fow)
+ 
+         y = yGetDicomGroups(path, recursive)

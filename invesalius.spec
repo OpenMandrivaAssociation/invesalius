@@ -9,11 +9,14 @@ Group:		Sciences/Other
 License:	GPLv2
 Summary:	3D medical imaging reconstruction software
 Version:	3.1.99998
-Release:	5
+Release:	6
 URL:		https://invesalius.github.io
 Source0:	https://github.com/invesalius/invesalius3/archive/v%{version}/%{name}-%{version}.tar.gz
 Source1:	%{name}.xpm
 Patch0:		invesalius3-3.1.99998-python3.11.patch
+# Make it work with the version of gdcm we ship
+Patch1:		https://github.com/invesalius/invesalius3/commit/89d6c18e223935a89526362c45c9ca424d1f5d1c.patch
+Patch2:		https://github.com/invesalius/invesalius3/commit/22a0da312891c9dd2d4fbbdd3a838fd8dba4ee06.patch
 
 BuildRequires:	imagemagick
 BuildRequires:	pkgconfig(python3)
@@ -23,22 +26,22 @@ BuildRequires:	python3dist(numpy)
 BuildRequires:	texlive
 %endif
 
-Requires:	python3dist(cython)
 Requires:	python-gdcm
-Requires:	python3dist(h5py)
-Requires:	python3dist(keras)
-Requires:	python3dist(imageio)
-Requires:	python3dist(nibabel)
-Requires:	python3dist(numpy)
-Requires:	python3dist(pillow)
-Requires:	python3dist(psutil)
-Requires:	python3dist(pyacvd)
-Requires:	python3dist(pypubsub)
-Requires:	python3dist(scipy)
-Requires:	python3dist(pyserial)
-Requires:	python3dist(scikit-image)
-Requires:	python3dist(theano)
-Requires:	python3dist(wxpython)
+Requires:	python%{pyver}dist(cython)
+Requires:	python%{pyver}dist(h5py)
+Requires:	python%{pyver}dist(keras)
+Requires:	python%{pyver}dist(imageio)
+Requires:	python%{pyver}dist(nibabel)
+Requires:	python%{pyver}dist(numpy)
+Requires:	python%{pyver}dist(pillow)
+Requires:	python%{pyver}dist(psutil)
+Requires:	python%{pyver}dist(pyacvd)
+Requires:	python%{pyver}dist(pypubsub)
+Requires:	python%{pyver}dist(scipy)
+Requires:	python%{pyver}dist(pyserial)
+Requires:	python%{pyver}dist(scikit-image)
+Requires:	python%{pyver}dist(theano)
+Requires:	python%{pyver}dist(wxpython)
 Requires:	python-vtk
 
 %description
