@@ -1,0 +1,59 @@
+From f8af93cc22ad3867cecc2973ebd3c8c995903237 Mon Sep 17 00:00:00 2001
+From: Thiago Franco de Moraes <totonixsame@gmail.com>
+Date: Sat, 5 Nov 2022 20:07:40 -0300
+Subject: [PATCH] forcing colors to int because of wxpython 4.2
+
+---
+ invesalius/data/viewer_slice.py    | 2 +-
+ invesalius/gui/task_surface.py     | 2 +-
+ invesalius/gui/widgets/gradient.py | 4 ++--
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/invesalius/data/viewer_slice.py b/invesalius/data/viewer_slice.py
+index ff6344ed9..d423e0137 100644
+--- a/invesalius/data/viewer_slice.py
++++ b/invesalius/data/viewer_slice.py
+@@ -1526,7 +1526,7 @@ def set_slice_number(self, index):
+ 
+     def ChangeSliceNumber(self, index):
+         #self.set_slice_number(index)
+-        self.scroll.SetThumbPosition(index)
++        self.scroll.SetThumbPosition(int(index))
+         pos = self.scroll.GetThumbPosition()
+         self.set_slice_number(pos)
+         self.interactor.Render()
+diff --git a/invesalius/gui/task_surface.py b/invesalius/gui/task_surface.py
+index 384fdb441..ae9ee2f43 100644
+--- a/invesalius/gui/task_surface.py
++++ b/invesalius/gui/task_surface.py
+@@ -587,7 +587,7 @@ def InsertNewSurface(self, surface):
+         self.combo_surface_name.SetSelection(i)
+         transparency = 100*surface.transparency
+         self.button_colour.SetColour(colour)
+-        self.slider_transparency.SetValue(transparency)
++        self.slider_transparency.SetValue(int(transparency))
+         #  Publisher.sendMessage('Update surface data', (index))
+ 
+     def OnComboName(self, evt):
+diff --git a/invesalius/gui/widgets/gradient.py b/invesalius/gui/widgets/gradient.py
+index dd713240d..52304154c 100644
+--- a/invesalius/gui/widgets/gradient.py
++++ b/invesalius/gui/widgets/gradient.py
+@@ -340,7 +340,7 @@ def _is_over_what(self, position_x):
+             return 0
+ 
+     def SetColour(self, colour):
+-        self.colour = colour
++        self.colour = [int(i) for i in colour]
+ 
+     def SetGradientColours(self, colors):
+         self._gradient_colours = colors
+@@ -509,7 +509,7 @@ def OnMaxMouseWheel(self, e):
+         self._GenerateEvent(myEVT_THRESHOLD_CHANGED)
+ 
+     def SetColour(self, colour):
+-        colour = list(colour[:3]) + [90]
++        colour = list(int(i) for i in colour[:3]) + [90]
+         self.colour = colour
+         self.gradient_slider.SetColour(colour)
+         self.gradient_slider.Refresh()

@@ -9,7 +9,7 @@ Group:		Sciences/Other
 License:	GPLv2
 Summary:	3D medical imaging reconstruction software
 Version:	3.1.99998
-Release:	6
+Release:	7
 URL:		https://invesalius.github.io
 Source0:	https://github.com/invesalius/invesalius3/archive/v%{version}/%{name}-%{version}.tar.gz
 Source1:	%{name}.xpm
@@ -17,6 +17,7 @@ Patch0:		invesalius3-3.1.99998-python3.11.patch
 # Make it work with the version of gdcm we ship
 Patch1:		https://github.com/invesalius/invesalius3/commit/89d6c18e223935a89526362c45c9ca424d1f5d1c.patch
 Patch2:		https://github.com/invesalius/invesalius3/commit/22a0da312891c9dd2d4fbbdd3a838fd8dba4ee06.patch
+Patch3:		https://github.com/invesalius/invesalius3/commit/f8af93cc22ad3867cecc2973ebd3c8c995903237.patch
 
 BuildRequires:	imagemagick
 BuildRequires:	pkgconfig(python3)
